@@ -1,0 +1,83 @@
+package bai1;
+import java.util.Date;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+public class hangthucpham {
+	String mahang;
+	String tenhang;
+	double dongia;
+	Date ngaysx, ngayhh;
+	public hangthucpham(String mahang, String tenhang, double dongia, Date ngaysx, Date ngayhh) {
+		if(mahang.isEmpty()){
+			throw new IllegalArgumentException("ma hang khong dc de rong");
+			
+		}
+		this.mahang = mahang;
+		this.tenhang = tenhang.isEmpty()? "xxx": tenhang;
+		this.dongia = dongia >= 0 ?dongia: 0;
+		this.ngaysx = ngaysx;
+		this.ngayhh = ngayhh;
+	}
+	public hangthucpham(String mahang) {
+		if(!mahang.isEmpty()) {
+			this.mahang = mahang;
+		}
+	}
+	public String gettenhang() {
+		return tenhang;
+	}
+	public void settenhang(String tenhang) {
+		this.tenhang = tenhang.isEmpty() ? "xxx": tenhang;
+	}
+	public double getdongia() {
+		return dongia;
+		
+	}
+	public void setdongia(double dongia) {
+		if(dongia >= 0) {
+			this.dongia = dongia;
+		}
+	}
+	public Date getngaysx() {
+		return ngaysx;
+	}
+	public void setngaysx(Date ngaysx) {
+		if(ngaysx.before(new Date())) {
+			this.ngaysx = ngaysx;
+		}
+	}
+	public Date getngayhh() {
+		return ngayhh;
+	}
+	public void setngayhh(Date ngayhh) {
+		if(ngayhh.after(this.ngaysx)) {
+			this.ngayhh = ngayhh;
+		}
+	}
+	public boolean isExpired() {
+		return new Date().after(this.ngayhh);
+	}
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		DecimalFormat df = new
+		DecimalFormat("#,###,##");
+		return "mahang: " + this.mahang + ",tenhang: " + this.tenhang + ", dongia: " + df.format(this.dongia) + "VND, ngaysx: " + sdf.format(this.ngaysx) + ",ngayhh: " + (isExpired()? "co": "khong");
+	}
+	
+   }
+   package bai1;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+public class main {
+public static void main(String[] args) {
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+	try {
+		hangthucpham hang1 = new hangthucpham("001", "Gao", 100000, (sdf.parse("10/7/2018")), (sdf.parse("10/7/2023")));
+		hangthucpham hang2 = new hangthucpham("002", "Mi", 5000, (sdf.parse("1/3/2018"), (sdf.parse("10/9/2023")));
+		hangthucpham hang2 = new hangthucpham("003", "Nuoc", 10000, (sdf.parse("1/3/2017"), (sdf.parse("1/3/2018")));
+	}
+}
+}
+
